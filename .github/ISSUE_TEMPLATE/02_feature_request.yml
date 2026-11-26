@@ -1,0 +1,54 @@
+name: "Feature request"
+description: "Propose a capability, a behaviour change, or a new source/region."
+title: "[FEATURE]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: "A feature request is a problem statement first. The implementation is the maintainer's call."
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "What problem does it solve?"
+      description: "Describe the situation, not the solution. Who hits it, and how often?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "Proposed behaviour"
+      description: "What the app or the collector should do differently."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternatives considered"
+      description: "Workarounds you tried, or a simpler option you rejected and why."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: "Area"
+      options:
+        - "Feed and cards"
+        - "Search, filters, saved searches"
+        - "Ingestion, parser, clustering"
+        - "Digest and notifications"
+        - "Deployment and operations"
+        - "Documentation"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: adr
+    attributes:
+      label: "Decision impact"
+      options:
+        - label: "This changes the data model, the ingestion method, or the access policy, so it needs an ADR."
+          required: false

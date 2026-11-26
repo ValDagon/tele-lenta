@@ -1,0 +1,36 @@
+# Теле-Лента VPS edge.
+#
+# Caddy terminates TLS and forwards only the two public surfaces to the API,
+# which itself listens on 127.0.0.1 (TL_HOST) and is unreachable from outside.
+# Everything else returns 404, including any future internal route.
+#
+# Environment:
+#   TL_API_DOMAIN  public hostname, e.g. api.tele-lenta.example
+#   TL_API_PORT    API port, defaults to 8787
+#   TL_ACME_EMAIL  ACME account email for Let's Encrypt
+#
+# Reload after editing: systemctl reload caddy
+
+{
+	email {$TL_ACME_EMAIL}
+}
+
+{$TL_API_DOMAIN} {
+	encode zstd gzip
+
+	header {
+		-Server
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+	}
+
+	handle /health {
+		reverse_proxy 127.0.0.1:{$TL_API_PORT:8787}
+	}
+
+	handle /v1/* {
+		reverse_proxy 127.0.0.1:{$TL_API_PORT:8787}
+	}
+
+	respond 404
+}

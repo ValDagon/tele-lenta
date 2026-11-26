@@ -1,0 +1,207 @@
+@import "tailwindcss";
+@import "./fonts.css";
+@import "./tokens.css";
+
+@theme inline {
+  --font-sans: var(--app-font-sans);
+
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-pressed: var(--surface-pressed);
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
+  --color-danger: var(--danger);
+
+  --radius-card: var(--app-radius-card);
+  --radius-thumb: var(--app-radius-thumb);
+  --radius-button: var(--app-radius-button);
+  --radius-chip: var(--app-radius-chip);
+  --radius-badge: var(--app-radius-badge);
+  --radius-sheet: var(--app-radius-sheet);
+
+  --text-display: var(--app-text-display);
+  --text-display--line-height: var(--app-text-display--line-height);
+  --text-display--font-weight: var(--app-text-display--font-weight);
+  --text-h1: var(--app-text-h1);
+  --text-h1--line-height: var(--app-text-h1--line-height);
+  --text-h1--font-weight: var(--app-text-h1--font-weight);
+  --text-h2: var(--app-text-h2);
+  --text-h2--line-height: var(--app-text-h2--line-height);
+  --text-h2--font-weight: var(--app-text-h2--font-weight);
+  --text-body: var(--app-text-body);
+  --text-body--line-height: var(--app-text-body--line-height);
+  --text-body--font-weight: var(--app-text-body--font-weight);
+  --text-sm: var(--app-text-sm);
+  --text-sm--line-height: var(--app-text-sm--line-height);
+  --text-sm--font-weight: var(--app-text-sm--font-weight);
+  --text-xs: var(--app-text-xs);
+  --text-xs--line-height: var(--app-text-xs--line-height);
+  --text-xs--font-weight: var(--app-text-xs--font-weight);
+  --text-price: var(--app-text-price);
+  --text-price--line-height: var(--app-text-price--line-height);
+  --text-price--font-weight: var(--app-text-price--font-weight);
+  --text-button: var(--app-text-button);
+  --text-button--line-height: var(--app-text-button--line-height);
+  --text-button--font-weight: var(--app-text-button--font-weight);
+}
+
+:root {
+  background: var(--canvas);
+  accent-color: var(--accent);
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--canvas);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--app-font-sans);
+  font-size: var(--app-text-body);
+  line-height: var(--app-text-body--line-height);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+/* Base resets must sit in the base layer: an unlayered rule outranks every
+   Tailwind utility, which would silently undo `text-[1rem]` on form controls
+   and let iOS zoom the search field. */
+@layer base {
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+/* The search field owns its clear control; hide the native WebKit one. */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  display: none;
+}
+
+/* Indeterminate 2px bar: the only loading signal on search. It never grows
+   the header, because the track keeps its height when nothing is loading. */
+.search-progress {
+  animation: search-progress 1.1s var(--ease-out) infinite;
+}
+
+@keyframes search-progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+/* Native bottom sheet. Focus is trapped by showModal(); no manual trap. */
+dialog.sheet {
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  margin: auto 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+}
+
+dialog.sheet[open] {
+  display: block;
+}
+
+dialog.sheet:modal {
+  overscroll-behavior: contain;
+}
+
+dialog.sheet::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: var(--overlay);
+}
+
+dialog.sheet[open] {
+  animation: sheet-in var(--motion-sheet) var(--ease-out);
+}
+
+dialog.sheet[open]::backdrop {
+  animation: scrim-in 180ms var(--ease-out);
+}
+
+@media (min-width: 600px) {
+  dialog.sheet {
+    max-width: 30rem;
+    margin: auto;
+    border-radius: var(--app-radius-sheet);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrim-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* The global rule would park the bar off-screen; show a still bar instead. */
+  .search-progress {
+    animation: none !important;
+    width: 100%;
+    transform: none;
+    opacity: 0.6;
+  }
+}

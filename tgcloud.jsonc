@@ -1,0 +1,8 @@
+{
+  // The Mini App build output is deployed with `npx tgcloud push`.
+  "static": {
+    "source": "dist",
+    // Vite content-hashes everything under /assets, so it is safe to cache.
+    "immutable": ["/assets/*"]
+  }
+}

@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software or build on it, please cite it as below."
+title: "Теле-Лента (tele-lenta)"
+abstract: >-
+  A Telegram Mini App that turns classifieds, jobs, and event posts from many
+  public Montenegrin and Serbian Telegram chats into one de-duplicated feed,
+  keeping a link back to every source message.
+version: 0.1.0
+date-released: 2026-11-26
+license: Apache-2.0
+repository-code: "https://github.com/ValDagon/tele-lenta"
+url: "https://github.com/ValDagon/tele-lenta"
+authors:
+  - family-names: "Kazantsev"
+    given-names: "Valentin"
+keywords:
+  - "telegram-mini-app"
+  - "telegram"
+  - "classifieds"
+  - "feed-aggregation"
+  - "preact"
+  - "typescript"
+  - "sqlite"
+  - "web-scraping"

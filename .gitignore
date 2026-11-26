@@ -1,0 +1,32 @@
+# OS & editor junk
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Secrets: never commit a real environment file
+.env
+.env.*
+!.env.example
+.tgcloud/
+
+# VPS runtime data: SQLite database and its WAL sidecars
+vps/data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Logs & test artifacts
+*.log
+coverage/
+.nyc_output/
+test-results/

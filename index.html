@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>Теле-Лента</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="/fonts/onest-cyrillic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/onest-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+      /*
+       * Pre-paint theme resolution. This is the only script before the app
+       * bundle: it must stay tiny and it must not throw. The stored override
+       * wins; otherwise Telegram's colorScheme, then the OS preference.
+       */
+      (function () {
+        var mode = "auto";
+        try {
+          mode = localStorage.getItem("tele_lenta.theme") || "auto";
+        } catch (error) {
+          /* storage blocked: keep auto */
+        }
+
+        var telegram = window.Telegram && window.Telegram.WebApp;
+        var telegramScheme = telegram
+          ? telegram.colorScheme === "dark"
+            ? "dark"
+            : "light"
+          : "";
+        var systemScheme = window.matchMedia
+          ? window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light"
+          : "light";
+
+        var resolved =
+          mode === "light" || mode === "dark"
+            ? mode
+            : telegramScheme || systemScheme;
+
+        document.documentElement.dataset.theme = resolved;
+        document.documentElement.style.colorScheme = resolved;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
